@@ -7,8 +7,7 @@ import subprocess
 
 timeout = 90
 host = 'localhost'
-port = 54321
-
+port = 5432
 user = os.getenv('POSTGRES_USER')
 
 def run(command):
@@ -41,11 +40,10 @@ def wait():
             time.sleep(3)
 
 
-databases = os.getenv('POSTGRES_DBS').split(',')
+database = os.getenv('POSTGRES_DB')
 wait()
-out, err = create_db(db)
+out, err = create_db(database)
 if b'the database system is starting up' in err:
     time.sleep(10)
-    break
 if err and b'already exists' not in err:
     print(err)
